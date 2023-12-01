@@ -27,7 +27,8 @@ jobs:
         with: 					# 함께 사용할 것  
           host: ${{ secrets.HOST }} 		# GitHub secret에 저장된 HOST  
           username: ${{ secrets.USERNAME }} 	# GitHub secret에 저장된 USERNAME  
-          password: ${{ secrets.PASSWORD }} 	# GitHub secret에 저장된 PASSWORD  
+          password: ${{ secrets.PASSWORD }} 	# GitHub secret에 저장된 PASSWORD 
+          port: ${{ secrets.PORT }}
           script: | 				# 서버에 접속 후 사용 할 스크립트 (아래는 예시 명령어)  
             killall java  
             killall nohub  
