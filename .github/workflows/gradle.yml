@@ -1,0 +1,42 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+# This workflow will build a Java project with Gradle and cache/restore any dependencies to improve the workflow execution time
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-gradle
+
+name: Java CI with Gradle
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps: 							# 수행 단계  
+      - name: executing remote ssh commands using password 	# 수행 단계 식별이름  
+        uses: appleboy/ssh-action@master 			# ssh 접속을 사용  
+        with: 					# 함께 사용할 것  
+          host: ${{ secrets.HOST }} 		# GitHub secret에 저장된 HOST  
+          username: ${{ secrets.USERNAME }} 	# GitHub secret에 저장된 USERNAME  
+          password: ${{ secrets.PASSWORD }} 	# GitHub secret에 저장된 PASSWORD  
+          script: | 				# 서버에 접속 후 사용 할 스크립트 (아래는 예시 명령어)  
+            killall java  
+            killall nohub  
+            echo "> java exit"  
+            cd board && git pull  
+            echo "> git clone update"  
+            chmod +x ./gradlew
+            ./gradlew build
+            echo "> build"  
+            nohup java -jar build/libs/board-0.0.1-SNAPSHOT.jar &
+            echo "> server on"  
+            exit
