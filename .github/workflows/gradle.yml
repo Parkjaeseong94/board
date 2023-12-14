@@ -40,4 +40,6 @@ jobs:
             echo "> build"  
             nohup java -jar build/libs/board-0.0.1-SNAPSHOT.jar &
             echo "> server on"  
+            sleep 10
+            echo "> Exiting after 10 seconds"
             exit
