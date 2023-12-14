@@ -42,4 +42,4 @@ jobs:
             echo "> server on"  
             sleep 10
             echo "> Exiting after 10 seconds"
-            exit
+            exit || true
